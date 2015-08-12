@@ -1,4 +1,4 @@
-FROM jpazdyga:centos7-base
+FROM jpazdyga/centos7-base
 MAINTAINER Jakub Pazdyga <jakub.pazdyga@ft.com>
 
 RUN rpmdb --rebuilddb && \ 
