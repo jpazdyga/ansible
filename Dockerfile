@@ -31,5 +31,6 @@ COPY supervisord.conf /etc/supervisor.d/supervisord.conf
 ENV container docker
 ENV DATE_TIMEZONE UTC
 VOLUME /var/log /etc
+EXPOSE 22
 USER root
 CMD ["/usr/bin/supervisord", "-n", "-c/etc/supervisor.d/supervisord.conf"]
