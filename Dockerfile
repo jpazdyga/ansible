@@ -4,7 +4,7 @@ MAINTAINER Jakub Pazdyga <jakub.pazdyga@ft.com>
 RUN rpmdb --rebuilddb && \ 
     rpmdb --initdb && \
     yum clean all && \
-    yum -y install PyYAML python-jinja2 python-httplib2 python-keyczar python-paramiko python-setuptools git python-pip
+    yum -y install openssh PyYAML python-jinja2 python-httplib2 python-keyczar python-paramiko python-setuptools git python-pip
 
 RUN mkdir /etc/ansible/
 RUN echo '[local]\nlocalhost\n' > /etc/ansible/hosts
