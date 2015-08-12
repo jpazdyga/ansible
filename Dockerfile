@@ -16,7 +16,7 @@ ENV PATH /opt/ansible/ansible/bin:/bin:/usr/bin:/sbin:/usr/sbin
 ENV PYTHONPATH /opt/ansible/ansible/lib
 ENV ANSIBLE_LIBRARY /opt/ansible/ansible/library
 RUN useradd -d /home/ansible -G wheel -m -s /bin/bash ansible && \
-    su ansible -c ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa && \
+    su ansible -c "ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa" && \
     echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC9+WGFm05i9tWfwolxsQgfOpl3NOL86IiNiticynQyw4tvd7JVEFsA1uJ3THDn3COb7zpuf4OJAVSX9VYXMYRhyeHxt7w98XscfTiHlWbgKFXEyfY5Bwfw520paUYfAIAMX6VQ12hGigGICM6lSb4510+C6Hy0LBUNFJt9GnmrLboVuNag7D8m4Tr1AGxGi/Jhv1o2JSByKOZPXxuLr/ah7JNVAmmqBfRE2FR+6SHkcpboNf6dAKiwSGmSr2BwizSp/MfOZuYePLEzidKpOrV1ybFx9nvu9PyhlHaMniQlCzkX0gT06XN+IxrXrdz9iLchgsWnAP5IowJPtl212ckB" > /home/ansible/.ssh/authorized_keys
     
 RUN sed -i \
