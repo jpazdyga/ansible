@@ -30,14 +30,16 @@ ENV ANSIBLE_LIBRARY /opt/ansible/ansible/library
 RUN useradd -d /home/ansible -G wheel -m -s /bin/bash ansible && \
     su ansible -c "ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa" && \
     ssh-keygen -A && \
-    echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC2t1lWVnWi2wjm8HIjBX+Oetps2nmgCp3jw/CwnXhBZCib35o2nyrZI9JkM5phoZb9XA0M9ZDyrx3bqwjgfrTiF+gFJNd3aeTUGuZUV6T7mALZ9dICy5XYbPRQR3BgLVAfDMMthbWaGiwfeVjxidcLJpDc6wXAj4YiT+80/B2s2TTJM6BIr8n8JoCNsFlheEu7wmAxNj0IpXlt72xTpGuh4LB8ZwiuZzrY5gOYpsfENioHTklHMXr2ucMxbP+mf5Qagtv2R7YrUNSWPRekNbEfYWiqVMTVWxKbRtEIQ7RnoJr2Talum6k5EIJYCrpWKf+2EgykTUyCNymzYaAPLDvT" > /home/ansible/.ssh/authorized_keys
+    echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC2t1lWVnWi2wjm8HIjBX+Oetps2nmgCp3jw/CwnXhBZCib35o2nyrZI9JkM5phoZb9XA0M9ZDyrx3bqwjgfrTiF+gFJNd3aeTUGuZUV6T7mALZ9dICy5XYbPRQR3BgLVAfDMMthbWaGiwfeVjxidcLJpDc6wXAj4YiT+80/B2s2TTJM6BIr8n8JoCNsFlheEu7wmAxNj0IpXlt72xTpGuh4LB8ZwiuZzrY5gOYpsfENioHTklHMXr2ucMxbP+mf5Qagtv2R7YrUNSWPRekNbEfYWiqVMTVWxKbRtEIQ7RnoJr2Talum6k5EIJYCrpWKf+2EgykTUyCNymzYaAPLDvT" > /home/ansible/.ssh/authorized_keys && \
+    mkdir -p /root/.ssh && \
+    echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPr8+DN/AoRQCFHIScu9esWzm1rPo/Ywou2K0rKB3U6RLcY1P4uMbk2J1MvB4W00AyMx5SulMgsBXXHklTB+IdpFr4ALZY8xKsVjEt8KNZmrnFknVV3CTGIIIFvHXHKkIPB4BlxMY2U6y+Uyqw7XLFMur6osNIwqIuTw9OoyC+04CkwlVUf3tecQlEINXoV5YDu0pr6WlPUFtAGmHklt1zj2JKxVemGPrsXhLM5TTPbG3faYNqiJ+AGfEpW4uFGdGa49IbyhbO4YmzIEHt0sS39e6n+GR/dFaeQmgxuSacx7G4pejbduPLgqbJ5Fb/CwvJ40v64POaVS7QasjcA9Od" > /root/.ssh/authorized_keys
     
 RUN sed -i \
 	-e 's/^PasswordAuthentication yes/PasswordAuthentication no/g' \
-	-e 's/^#PermitRootLogin yes/PermitRootLogin no/g' \
+	-e 's/^#PermitRootLogin yes/PermitRootLogin yes/g' \
 	-e 's/^#UseDNS yes/UseDNS no/g' \
 	/etc/ssh/sshd_config
-RUN sed -i 's/^# %wheel\tALL=(ALL)\tALL/%wheel\tALL=(ALL)\tALL\tNOPASSWD:\tALL/g' /etc/sudoers
+RUN echo -e "ansible\tALL=(ALL)\tNOPASSWD:\tALL" >> /etc/sudoers
 COPY supervisord.conf /etc/supervisor.d/supervisord.conf
 ENV container docker
 ENV DATE_TIMEZONE UTC
