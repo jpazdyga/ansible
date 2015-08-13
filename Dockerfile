@@ -38,6 +38,7 @@ RUN mkdir -p /etc/ansible/
 RUN echo -e "[local]\nlocalhost\n" > /etc/ansible/hosts
 COPY supervisord.conf /etc/supervisor.d/supervisord.conf
 COPY add_new_coreos_host.sh /usr/local/bin/add_new_coreos_host.sh
+RUN chmod 755 /usr/local/bin/add_new_coreos_host.sh
 COPY coreos-bootstrap.yml /etc/ansible/coreos-bootstrap.yml
 COPY coreos-fsdeploy.yml /etc/ansible/coreos-fsdeploy.yml
 ENV container docker
