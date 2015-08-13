@@ -37,9 +37,9 @@ RUN sed -i \
 	-e 's/^#UseDNS yes/UseDNS no/g' \
 	/etc/ssh/sshd_config
 RUN sed -i \
-        -e 's/^%wheel  ALL=(ALL)       ALL/#%wheel  ALL=(ALL)       ALL/g' \
-        -e 's/^# %wheel        ALL=(ALL)       NOPASSWD: ALL/%wheel        ALL=(ALL)       NOPASSWD: ALL/g' \
-        /etc/sudoers
+        -e 's/^%wheel\tALL=(ALL)\tALL/#%wheel\tALL=(ALL)\tALL/g' \
+        /etc/sudoers && \
+        echo -e "%wheel\tALL=(ALL)\tNOPASSWD:\tALL" >> /etc/sudoers
 COPY supervisord.conf /etc/supervisor.d/supervisord.conf
 ENV container docker
 ENV DATE_TIMEZONE UTC
