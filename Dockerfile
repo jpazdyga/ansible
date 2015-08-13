@@ -34,7 +34,8 @@ RUN sed -i \
         echo -e "%wheel\tALL=(ALL)\tNOPASSWD:\tALL" >> /etc/sudoers
 RUN yum -y install ansible \
                    ansible-lint
-RUN mkdir -p /etc/ansible/ 
+RUN mkdir -p /etc/ansible/ && \
+    mkdir -p /etc/ansible/tmp
 RUN echo -e "[local]\nlocalhost\n" > /etc/ansible/hosts && \
     chown ansible:users /etc/ansible -R
 COPY supervisord.conf /etc/supervisor.d/supervisord.conf
