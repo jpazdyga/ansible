@@ -4,6 +4,7 @@ MAINTAINER Jakub Pazdyga <jakub.pazdyga@ft.com>
 RUN rpmdb --rebuilddb && \ 
     rpmdb --initdb && \
     yum clean all && \
+    yum -y update && \
     yum -y install openssh \
                    openssl \ 
                    openssl-libs \
@@ -20,13 +21,6 @@ RUN rpmdb --rebuilddb && \
 
 RUN mkdir /etc/ansible/
 RUN echo '[local]\nlocalhost\n' > /etc/ansible/hosts
-RUN mkdir /opt/ansible/
-RUN git clone http://github.com/ansible/ansible.git /opt/ansible/ansible
-WORKDIR /opt/ansible/ansible
-RUN git submodule update --init
-ENV PATH /opt/ansible/ansible/bin:/bin:/usr/bin:/sbin:/usr/sbin
-ENV PYTHONPATH /opt/ansible/ansible/lib
-ENV ANSIBLE_LIBRARY /opt/ansible/ansible/library
 RUN useradd -d /home/ansible -G wheel -m -s /bin/bash ansible && \
     su ansible -c "ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa" && \
     ssh-keygen -A && \
@@ -40,6 +34,8 @@ RUN sed -i \
         -e 's/^%wheel\tALL=(ALL)\tALL/#%wheel\tALL=(ALL)\tALL/g' \
         /etc/sudoers && \
         echo -e "%wheel\tALL=(ALL)\tNOPASSWD:\tALL" >> /etc/sudoers
+RUN yum -y install ansible \
+                   ansible-lint
 COPY supervisord.conf /etc/supervisor.d/supervisord.conf
 ENV container docker
 ENV DATE_TIMEZONE UTC
