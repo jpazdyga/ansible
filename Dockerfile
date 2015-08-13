@@ -19,8 +19,6 @@ RUN rpmdb --rebuilddb && \
                    git \
                    python-pip
 
-RUN mkdir /etc/ansible/
-RUN echo '[local]\nlocalhost\n' > /etc/ansible/hosts
 RUN useradd -d /home/ansible -G wheel -m -s /bin/bash ansible && \
     su ansible -c "ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa" && \
     ssh-keygen -A && \
@@ -36,6 +34,8 @@ RUN sed -i \
         echo -e "%wheel\tALL=(ALL)\tNOPASSWD:\tALL" >> /etc/sudoers
 RUN yum -y install ansible \
                    ansible-lint
+RUN mkdir -p /etc/ansible/
+RUN echo '[local]\nlocalhost\n' > /etc/ansible/hosts
 COPY supervisord.conf /etc/supervisor.d/supervisord.conf
 ENV container docker
 ENV DATE_TIMEZONE UTC
