@@ -35,7 +35,7 @@ RUN sed -i \
 RUN yum -y install ansible \
                    ansible-lint
 RUN mkdir -p /etc/ansible/
-RUN echo '[local]\nlocalhost\n' > /etc/ansible/hosts
+RUN echo -e "[local]\nlocalhost\n" > /etc/ansible/hosts
 COPY supervisord.conf /etc/supervisor.d/supervisord.conf
 ENV container docker
 ENV DATE_TIMEZONE UTC
