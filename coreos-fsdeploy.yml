@@ -14,6 +14,10 @@
     - name: Prepare fsdeployer env
       file: path=~/fsdeployer state=directory mode=0755
 
+    - name: Turn off StrictHostKeyChecking
+      shell: echo "StrictHostKeyChecking=no" >> /etc/ssh/ssh_config
+      sudo: true
+
     - git: repo=https://github.com/jpazdyga/fsdeployer.git
        dest=/tmp/fsdeployer
        version=master
