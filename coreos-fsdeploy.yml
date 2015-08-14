@@ -15,8 +15,11 @@
       file: path=~/fsdeployer state=directory mode=0755
 
     - name: Turn off StrictHostKeyChecking
-      shell: ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa && ssh-keyscan github.com >> /home/ansible/.ssh/known_hosts && echo -e "Host *\n\tStrictHostKeyChecking=no" >> /home/ansible/.ssh/ssh_config
-      sudo: true
+      shell: ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa && \ 
+             ssh-keyscan github.com >> /home/ansible/.ssh/known_hosts && \
+             eval $(ssh-agent) && \
+             ssh-add /home/ansible/.ssh/id_rsa && \
+             echo -e "Host *\n\tStrictHostKeyChecking=no\nForwardAgent yes" >> /home/ansible/.ssh/ssh_config
 
     - git: repo=https://github.com/jpazdyga/fsdeployer.git
        dest=/tmp/fsdeployer
