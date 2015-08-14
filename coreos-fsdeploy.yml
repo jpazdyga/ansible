@@ -19,7 +19,7 @@
              ssh-keyscan github.com >> /home/ansible/.ssh/known_hosts && \
              eval $(ssh-agent) && \
              ssh-add /home/ansible/.ssh/id_rsa && \
-             echo -e "Host *\n\tStrictHostKeyChecking=no\n\tForwardAgent yes" >> /home/ansible/.ssh/ssh_config
+             echo -e "Host *\n\tStrictHostKeyChecking no\n\tForwardAgent yes" >> /home/ansible/.ssh/ssh_config
 
     - git: repo=https://github.com/jpazdyga/fsdeployer.git
        dest=/tmp/fsdeployer
