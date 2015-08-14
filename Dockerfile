@@ -37,13 +37,16 @@ RUN yum -y install ansible \
                    ansible-lint
 RUN mkdir -p /etc/ansible/ && \
     mkdir -p /etc/ansible/tmp
-RUN echo -e "[local]\nlocalhost\n\n[newcoreoshosts]\n" > /etc/ansible/hosts && \
+RUN echo -e "[local]\nlocalhost\n\n[newcoreoshosts]\n\n[newcoreoshosts:vars]\nansible_python_interpreter=\"PATH=/home/ansible/bin:$PATH python\"" > /etc/ansible/hosts && \
     chown ansible:users /etc/ansible -R
 COPY supervisord.conf /etc/supervisor.d/supervisord.conf
 COPY add_new_coreos_host.sh /usr/local/bin/add_new_coreos_host.sh
 RUN chmod 755 /usr/local/bin/add_new_coreos_host.sh
 COPY coreos-bootstrap.yml /etc/ansible/coreos-bootstrap.yml
 COPY coreos-fsdeploy.yml /etc/ansible/coreos-fsdeploy.yml
+RUN sed -i \
+        -e 's/^#host_key_checking = False/host_key_checking = False/g' \
+        /etc/ansible/ansible.cfg
 RUN su ansible -c "ansible-galaxy install defunctzombie.coreos-bootstrap"
 ENV container docker
 ENV DATE_TIMEZONE UTC
