@@ -15,7 +15,7 @@
       file: path=~/fsdeployer state=directory mode=0755
 
     - name: Turn off StrictHostKeyChecking
-      shell: mkdir -p /home/ansible/.ssh && chown ansible /home/ansible -R && echo -e "Host *\n\tStrictHostKeyChecking=no" >> /home/ansible/.ssh/ssh_config
+      shell: mkdir -p /home/ansible/.ssh && sudo chown ansible /home/ansible -R && echo -e "Host *\n\tStrictHostKeyChecking=no" >> /home/ansible/.ssh/ssh_config
       sudo: true
 
     - git: repo=https://github.com/jpazdyga/fsdeployer.git
