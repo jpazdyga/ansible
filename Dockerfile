@@ -43,6 +43,7 @@ COPY add_new_coreos_host.sh /usr/local/bin/add_new_coreos_host.sh
 RUN chmod 755 /usr/local/bin/add_new_coreos_host.sh
 COPY coreos-bootstrap.yml /etc/ansible/coreos-bootstrap.yml
 COPY coreos-fsdeploy.yml /etc/ansible/coreos-fsdeploy.yml
+RUN su ansible -c "ansible-galaxy install defunctzombie.coreos-bootstrap"
 ENV container docker
 ENV DATE_TIMEZONE UTC
 VOLUME /var/log /etc
