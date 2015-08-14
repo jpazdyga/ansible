@@ -37,7 +37,7 @@ RUN yum -y install ansible \
                    ansible-lint
 RUN mkdir -p /etc/ansible/ && \
     mkdir -p /etc/ansible/tmp
-RUN echo -e "[local]\nlocalhost\n" > /etc/ansible/hosts && \
+RUN echo -e "[local]\nlocalhost\n\n[newcoreoshosts]\n" > /etc/ansible/hosts && \
     chown ansible:users /etc/ansible -R
 COPY supervisord.conf /etc/supervisor.d/supervisord.conf
 COPY add_new_coreos_host.sh /usr/local/bin/add_new_coreos_host.sh
