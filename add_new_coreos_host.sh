@@ -4,7 +4,10 @@ updatehosts() {
 
         awk '{print} /\[newcoreoshosts\]/ {exit}' $ansiblehosts > $tmpfilenamenew
         cat $tmpfilenameold >> $tmpfilenamenew
-        echo $ipaddress >> $tmpfilenamenew
+        echo -e "$ipaddress\n" >> $tmpfilenamenew
+        sed -n '/\[newcoreoshosts:vars\]/,//p' $ansiblehosts >> $tmpfilenamenew
+        cat $tmpfilenamenew
+exit 0
         cp $ansiblehosts $ansiblehosts.bkp
         cp $tmpfilenamenew $ansiblehosts
         rm -fr tmpfilenameold
@@ -14,7 +17,8 @@ updatehosts() {
 
 proceed() {
 
-        sed -n '/\[newcoreoshosts\]/,/\[newcoreoshosts:vars\]/p' $ansiblehosts | grep -v "\[" > $tmpfilenameold
+        sed -n '/\[newcoreoshosts\]$/,/\[newcoreoshosts:vars\]/p' $ansiblehosts | grep -v "\[" | grep . > $tmpfilenameold
+        echo "----"; cat $tmpfilenameold
         alreadythere=`grep $ipaddress $tmpfilenameold`
         if [ -z "$alreadythere" ];
         then   
