@@ -7,7 +7,6 @@ updatehosts() {
         echo -e "$ipaddress\n" >> $tmpfilenamenew
         sed -n '/\[newcoreoshosts:vars\]/,//p' $ansiblehosts >> $tmpfilenamenew
         cat $tmpfilenamenew
-exit 0
         cp $ansiblehosts $ansiblehosts.bkp
         cp $tmpfilenamenew $ansiblehosts
         rm -fr tmpfilenameold
