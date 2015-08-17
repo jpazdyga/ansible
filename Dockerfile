@@ -34,10 +34,10 @@ RUN sed -i \
         /etc/sudoers && \
         echo -e "%wheel\tALL=(ALL)\tNOPASSWD:\tALL" >> /etc/sudoers
 RUN yum -y install ansible \
-                   ansible-lint
-RUN mkdir -p /etc/ansible/ && \
-    mkdir -p /etc/ansible/tmp
-RUN echo -e "[local]\nlocalhost\n\n[newcoreoshosts]\n\n[newcoreoshosts:vars]\nansible_python_interpreter=\"PATH=/home/ansible/bin:$PATH python\"" > /etc/ansible/hosts && \
+                   ansible-lint && \
+    mkdir -p /etc/ansible/ && \
+    mkdir -p /etc/ansible/tmp && \
+    echo -e "[local]\nlocalhost\n\n[newcoreoshosts]\n\n[newcoreoshosts:vars]\nansible_python_interpreter=\"PATH=/home/ansible/bin:$PATH python\"" > /etc/ansible/hosts && \
     chown ansible:users /etc/ansible -R
 COPY supervisord.conf /etc/supervisor.d/supervisord.conf
 COPY add_new_coreos_host.sh /usr/local/bin/add_new_coreos_host.sh
