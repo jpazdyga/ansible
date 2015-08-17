@@ -14,11 +14,14 @@
     - name: Prepare fsdeployer env
       file: path=~/fsdeployer state=directory mode=0755
 
-    - name: Turn off StrictHostKeyChecking
+    - name: Turn off StrictHostKeyChecking for ansible user
       shell: ssh-keyscan github.com >> /home/ansible/.ssh/known_hosts && \
-             ssh-keyscan github.com >> /root/.ssh/known_hosts && \
              echo -e "Host *\n\tStrictHostKeyChecking no\n\tForwardAgent yes" >> /home/ansible/.ssh/ssh_config
+
+    - name: Turn off StrictHostKeyChecking for root
+      shell: ssh-keyscan github.com >> /root/.ssh/known_hosts && \
              echo -e "Host *\n\tStrictHostKeyChecking=no\nForwardAgent yes" >> /root/.ssh/ssh_config
+      sudo: true
 
     - git: repo=https://github.com/jpazdyga/fsdeployer.git
        dest=/tmp/fsdeployer
