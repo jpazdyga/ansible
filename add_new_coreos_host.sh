@@ -33,6 +33,7 @@ conncheck() {
         result=`ping -q -c5 -i .5 $ipaddress 2>&1 > /dev/null; echo $?`
         if [ "$result" -eq "0" ];
         then
+		echo "OK, host reachable..."
                 proceed
         else
                 echo "Waiting for host to appear..."
@@ -44,6 +45,7 @@ conncheck() {
 
 ipaddress="$1"
 ansiblehosts="/etc/ansible/hosts"
+mkdir -p $HOME/tmp
 tmpfilenameold="$HOME/tmp/newcoreoshost.old"
 tmpfilenamenew="$HOME/tmp/newcoreoshost.new"
 
