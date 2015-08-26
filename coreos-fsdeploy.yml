@@ -3,8 +3,8 @@
   sudo: false
   become_method: su
   tasks:
-    - name: Start etcd2
-      service: name=etcd2.service state=started
+    - name: Start etcd
+      service: name=etcd.service state=started
       sudo: true
 
     - name: Install docker-py
