@@ -20,7 +20,7 @@
              echo -e "Host *\n\tStrictHostKeyChecking no\n\tForwardAgent yes" >> /home/ansible/.ssh/ssh_config
 
     - name: Turn off StrictHostKeyChecking for root
-      shell: mkdir -p/root/.ssh && \
+      shell: mkdir -p /root/.ssh && \
              ssh-keyscan github.com >> /root/.ssh/known_hosts && \
              echo -e "Host *\n\tStrictHostKeyChecking=no\nForwardAgent yes" >> /root/.ssh/ssh_config
       sudo: true
