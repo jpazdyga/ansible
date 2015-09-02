@@ -31,5 +31,5 @@
        accept_hostkey=True
 
     - name: Deploy the app
-      shell: cd /tmp/fsdeployer; ./deploy.sh '{{ giturl }}' '{{ domain }}'
+      shell: cd /tmp/fsdeployer; ./deploy.sh '{{ giturl }}' '{{ domain }}' '{{ helpers }}'
       sudo: true
